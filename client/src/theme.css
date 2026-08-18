@@ -1,0 +1,40 @@
+:root {
+  /* Surface */
+  --color-bg: #16161F;
+  --color-surface: #1F1F2E;
+  --color-surface-hover: #292940;
+  --color-border: #35354A;
+
+  /* Text */
+  --color-text: #EDEDF4;
+  --color-text-muted: #A5A5BD;
+
+  /* Accent */
+  --color-accent: #C4B5FD;
+  --color-accent-hover: #A78BFA;
+  --color-accent-contrast: #16161F;
+
+  /* Secondary accent, for glow / highlights */
+  --color-accent-2: #F9A8D4;
+
+  /* Feedback */
+  --color-success: #86EFAC;
+  --color-error: #F87171;
+  --color-warning: #FBBF24;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  /* Type */
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-heading: 'Sora', system-ui, sans-serif;
+}

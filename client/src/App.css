@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Sora:wght@600;700&display=swap');
+
+.app {
+  background: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100vh;
+  padding: var(--space-xl);
+  font-family: var(--font-body);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.app h1 {
+  font-family: var(--font-heading);
+}
+
+.app p {
+  color: var(--color-text-muted);
+}
+
+.app::before {
+  content: '';
+  position: absolute;
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 400px;
+  background: radial-gradient(circle, var(--color-accent) 0%, transparent 70%);
+  opacity: 0.15;
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.app > * {
+  position: relative;
+  z-index: 1;
+}
+
+.lead-form {
+  margin-top: var(--space-lg);
+  display: flex;
+  justify-content: center;
+  gap: var(--space-sm);
+}
+
+.lead-form input {
+  padding: var(--space-sm) var(--space-md);
+  width: 250px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.lead-form input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.lead-form button {
+  padding: var(--space-sm) var(--space-lg);
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.lead-form button:hover {
+  background: var(--color-accent-hover);
+}
+
+.lead-message {
+  color: var(--color-warning);
+  margin-top: var(--space-md);
+}
