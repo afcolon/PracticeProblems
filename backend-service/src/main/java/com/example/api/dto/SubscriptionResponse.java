@@ -1,10 +1,10 @@
 package com.example.api.dto;
 
-public class LeadResponse {
+public class SubscriptionResponse {
     private final String status;
     private final String message;
 
-    public LeadResponse(String status, String message) {
+    public SubscriptionResponse(String status, String message) {
         this.status = status;
         this.message = message;
     }

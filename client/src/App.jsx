@@ -7,7 +7,7 @@ export default function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('/api/leads', {
+      const res = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
@@ -27,12 +27,12 @@ export default function App() {
       <form className="lead-form" onSubmit={handleSubmit}>
         <input
           type="email"
-          placeholder="Enter work email"
+          placeholder="Enter email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-        <button type="submit">Submit Lead</button>
+        <button type="submit">Submit</button>
       </form>
       {message && <p className="lead-message">{message}</p>}
     </div>

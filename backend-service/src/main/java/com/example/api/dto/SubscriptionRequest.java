@@ -1,6 +1,6 @@
 package com.example.api.dto;
 
-public class LeadRequest {
+public class SubscriptionRequest {
     private String email;
 
     public String getEmail() { return email; }
