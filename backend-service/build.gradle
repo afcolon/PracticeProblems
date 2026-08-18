@@ -20,4 +20,34 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+
+    testLogging {
+        // ONLY log when a test explicitly fails or is skipped (keeps logs clean)
+        events "failed", "skipped"
+        
+        // Show the code's System.out logs ONLY for tests that end up failing
+        showStandardStreams = false
+        
+        // Print full stack traces and reasons only for errors
+        exceptionFormat = "full"
+    }
+
+    // This hook executes immediately after the test run finishes
+    afterSuite { desc, result ->
+        if (!desc.parent) { // Focuses entirely on the final root suite summary
+            println "\n=========================================="
+            println " TEST EXECUTION SUMMARY"
+            println "=========================================="
+            println " Total Tests : ${result.testCount}"
+            println " Passed      : ${result.successfulTestCount}"
+            println " Failed      : ${result.failedTestCount}"
+            println " Skipped     : ${result.skippedTestCount}"
+            println "==========================================\n"
+        }
+    }
 }

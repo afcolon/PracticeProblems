@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.api.service.SubscriptionServiceImplTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-08-18T21:06:59" hostname="795129d806af" time="0.087">
+  <properties/>
+  <testcase name="createSubscription_fails_null_email()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.065"/>
+  <testcase name="createSubscription_fails_empty_email()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.002"/>
+  <testcase name="createSubscription_fails_duplicate_email()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.009"/>
+  <testcase name="createSubscription_success_new_email()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.002"/>
+  <testcase name="createSubscription_fails_invalid_email()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.002"/>
+  <system-out><![CDATA[Microservices received subscription:null
+Microservices received subscription:
+Microservices received subscription:dupe@email.com
+Microservices received subscription:dupe@email.com
+Microservices received subscription:testEmail@email.com
+Microservices received subscription:invalidEmail
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
