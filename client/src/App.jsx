@@ -7,13 +7,14 @@ export default function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('/api/subscribe', {
+      const response = await fetch('/api/subscriptions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
       });
-      const data = await res.json();
+      const data = await response.json();
       setMessage(data.message);
+      
     } catch (err) {
       setMessage('Error connecting to microservice API gateway.');
     }
