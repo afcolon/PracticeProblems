@@ -1,5 +1,6 @@
 package com.example.api.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,10 +20,14 @@ public class SubscriptionController {
         this.subscriptionService = subscriptionService;
     }
 
-    @PostMapping("/subscribe")
-    public SubscriptionResponse processSubscription(
+    /**
+     * Creates a new subscription.
+     */
+    @PostMapping("/subscriptions")
+    public ResponseEntity<SubscriptionResponse> createSubscription(
         @RequestBody SubscriptionRequest request
     ) {
-        return subscriptionService.createSubscription(request);
+        SubscriptionResponse response = subscriptionService.createSubscription(request);
+        return ResponseEntity.ok(response);
     }
 }
