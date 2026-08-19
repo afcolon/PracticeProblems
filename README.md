@@ -25,16 +25,19 @@ Unlike a standard monolith, this application runs as a distributed network of de
 
 *   **`gateway` (Nginx)**: The single entry point for the browser. It runs on port `8080`, reading incoming request paths. It forwards `/api/*` traffic to the backend, and routes all other requests to the React dev server.
 *   **`client` (React + Vite + pnpm 11)**: The frontend user interface. It communicates using relative routing (`/api/subscriptions`), removing the need to configure CORS or manage hardcoded backend URLs.
-*   **`backend-service` (Spring Boot + Gradle)**: The independent data processor. It exposes a single REST endpoint (`/api/subscriptions`) to process and display incoming subscription submissions.
+*   **`backend-service` (Spring Boot + Gradle)**: The independent data processor. It exposes a REST endpoint (`/api/subscriptions`) to process and store incoming subscription submissions, backed by a thread-safe in-memory store.
 
 ---
 
 ## 🛠️ Project Structure
 
-The backend application follows a standard Layered Architecture pattern to keep core domain business logic protected from raw HTTP network operations.
+The backend application follows a standard Layered Architecture pattern to keep core domain business logic protected from raw HTTP network operations. Failures are raised as typed exceptions and translated into HTTP responses in one central location, rather than handled inline in each controller.
 
 ```text
 microservice-practice/
+├── .github/
+│   └── workflows/
+│       └── backend-tests.yml # CI: runs backend test suite on push/PR
 ├── gateway/
 │   └── nginx.conf            # Nginx proxy mapping rules
 ├── backend-service/
@@ -46,19 +49,35 @@ microservice-practice/
 │       │   ├── controller/                  # REST API Layer (Exposes /api/subscriptions)
 │       │   ├── service/                     # Business Logic (Uniqueness/Processing)
 │       │   ├── model/                       # Core Domain Entities (Subscription Schema)
-│       │   └── dto/                         # Data Transfer Objects (Req/Res Payload Shapes)
+│       │   ├── dto/                         # Data Transfer Objects (Req/Res Payload Shapes)
+│       │   └── exceptions/                  # Custom exceptions + centralized @ControllerAdvice handler
 │       │
 │       └── test/java/com/example/api/       # Test Infrastructure Package
-│           └── service/
-│               └── SubscriptionServiceImplTest.java # JUnit Validation Suite
+│           ├── service/
+│           │   └── SubscriptionServiceImplTest.java    # JUnit validation suite (business logic)
+│           └── controller/
+│               └── SubscriptionControllerTest.java     # MockMvc + @WebMvcTest (HTTP layer)
 ├── client/
-│   ├── src/                  # React components (App.jsx, main.jsx)
+│   ├── src/                  # React components (App.jsx, main.jsx, theme.css, App.css)
 │   ├── index.html            # Vite entry point layout
 │   ├── package.json          # Node dependency tracking
 │   └── pnpm-workspace.yaml   # pnpm 11 build script permissions
 ├── docker-compose.yml        # Main multi-container orchestrator
 └── README.md                 # Project documentation
 ```
+
+---
+
+## ⚠️ Error Handling
+
+Business-rule failures are modeled as unchecked exceptions rather than status strings embedded in a response body, so the HTTP layer and the business logic stay cleanly separated:
+
+| Failure                          | Exception               | HTTP Status         |
+|-----------------------------------|--------------------------|----------------------|
+| Malformed or missing email        | `InvalidEmailException`  | `400 Bad Request`    |
+| Email already subscribed          | `DuplicateException`     | `409 Conflict`       |
+
+The service layer throws; a `GlobalExceptionHandler` (`@ControllerAdvice`) is the single place that maps each exception type to its HTTP response. Controllers stay free of try/catch blocks and only describe the success path.
 
 ---
 
@@ -86,10 +105,13 @@ docker compose up
 
 ## 🧪 Testing Infrastructure
 
-The backend service runs automated business validation checks using **JUnit 5** and **Spring Boot Test Starters** to ensure constraints (like email duplication guards and thread-safe serial IDs) are fully functional.
+The backend service runs automated checks at two layers using **JUnit 5**, **Mockito**, and **Spring Boot Test Starters**:
+
+*   **Service layer** (`SubscriptionServiceImplTest`) — validates business rules directly: email format validation, case-insensitive duplicate detection, and thread-safe ID assignment, asserting on the exceptions thrown for each failure case.
+*   **Controller layer** (`SubscriptionControllerTest`) — uses `@WebMvcTest` with a mocked `SubscriptionService` to verify HTTP routing, request/response JSON shape, and that each exception type is translated into the correct status code, without re-testing business logic already covered by the service tests.
 
 ### Running Backend Unit Tests
-Because Gradle runs inside an isolated container, you can execute the test suite dynamically on the fly without stopping your application stack. 
+Because Gradle runs inside an isolated container, you can execute the test suite dynamically on the fly without stopping your application stack.
 
 Open a separate terminal window and run:
 ```bash
@@ -101,6 +123,9 @@ When a test run completes, Gradle exports an interactive HTML summary file. To v
 ```text
 backend-service/build/reports/tests/test/index.html
 ```
+
+### Continuous Integration
+A GitHub Actions workflow (`.github/workflows/backend-tests.yml`) automatically runs the full backend test suite on every push and pull request targeting `main`, so regressions are caught before merge rather than discovered locally.
 
 ---
 
