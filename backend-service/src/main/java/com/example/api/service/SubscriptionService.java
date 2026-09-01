@@ -1,7 +1,10 @@
 package com.example.api.service;
 
+import java.util.List;
+import com.example.api.model.Subscription;
 import com.example.api.dto.SubscriptionRequest;
 import com.example.api.dto.SubscriptionResponse;
+import com.example.api.dto.SubscriptionItemDto;
 
 public interface SubscriptionService {
 
@@ -10,4 +13,14 @@ public interface SubscriptionService {
      * already been subscribed.
      */
     SubscriptionResponse createSubscription(SubscriptionRequest request);
+
+    /**
+     * Returns a list of all subscriptions
+     */
+    List<Subscription> getAllSubscriptions();
+
+    /**
+     * Returns a list of all subscriptions as {@code SubscriptionItemDto}s
+     */
+    List<SubscriptionItemDto> getAllSubscriptionDtos();
 }

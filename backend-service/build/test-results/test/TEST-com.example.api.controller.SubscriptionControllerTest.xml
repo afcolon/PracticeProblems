@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.example.api.controller.SubscriptionControllerTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-09-01T19:51:27" hostname="795129d806af" time="1.082">
+<testsuite name="com.example.api.controller.SubscriptionControllerTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-09-01T21:00:40" hostname="795129d806af" time="2.167">
   <properties/>
-  <testcase name="createsSubscription_success()" classname="com.example.api.controller.SubscriptionControllerTest" time="1.03"/>
-  <testcase name="createsSubscription_failure_duplicate_email()" classname="com.example.api.controller.SubscriptionControllerTest" time="0.035"/>
-  <testcase name="createsSubscription_failure_invalid_email()" classname="com.example.api.controller.SubscriptionControllerTest" time="0.008"/>
-  <system-out><![CDATA[19:51:18.855 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.example.api.controller.SubscriptionControllerTest]: SubscriptionControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-19:51:19.420 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.example.api.ApiApplication for test class com.example.api.controller.SubscriptionControllerTest
+  <testcase name="createsSubscription_success()" classname="com.example.api.controller.SubscriptionControllerTest" time="2.032"/>
+  <testcase name="createsSubscription_failure_duplicate_email()" classname="com.example.api.controller.SubscriptionControllerTest" time="0.047"/>
+  <testcase name="createsSubscription_failure_invalid_email()" classname="com.example.api.controller.SubscriptionControllerTest" time="0.022"/>
+  <testcase name="getSubscriptions_success()" classname="com.example.api.controller.SubscriptionControllerTest" time="0.047"/>
+  <system-out><![CDATA[21:00:24.474 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.example.api.controller.SubscriptionControllerTest]: SubscriptionControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+21:00:25.422 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.example.api.ApiApplication for test class com.example.api.controller.SubscriptionControllerTest
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
@@ -15,12 +16,12 @@
 
  :: Spring Boot ::                (v3.3.0)
 
-2026-09-01T19:51:21.215Z  INFO 347 --- [    Test worker] c.e.a.c.SubscriptionControllerTest       : Starting SubscriptionControllerTest using Java 17.0.11 with PID 347 (started by root in /app)
-2026-09-01T19:51:21.222Z  INFO 347 --- [    Test worker] c.e.a.c.SubscriptionControllerTest       : No active profile set, falling back to 1 default profile: "default"
-2026-09-01T19:51:27.670Z  INFO 347 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2026-09-01T19:51:27.671Z  INFO 347 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2026-09-01T19:51:27.678Z  INFO 347 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 4 ms
-2026-09-01T19:51:27.737Z  INFO 347 --- [    Test worker] c.e.a.c.SubscriptionControllerTest       : Started SubscriptionControllerTest in 7.995 seconds (process running for 11.173)
+2026-09-01T21:00:28.191Z  INFO 899 --- [    Test worker] c.e.a.c.SubscriptionControllerTest       : Starting SubscriptionControllerTest using Java 17.0.11 with PID 899 (started by root in /app)
+2026-09-01T21:00:28.196Z  INFO 899 --- [    Test worker] c.e.a.c.SubscriptionControllerTest       : No active profile set, falling back to 1 default profile: "default"
+2026-09-01T21:00:40.210Z  INFO 899 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-09-01T21:00:40.212Z  INFO 899 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-09-01T21:00:40.258Z  INFO 899 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 42 ms
+2026-09-01T21:00:40.376Z  INFO 899 --- [    Test worker] c.e.a.c.SubscriptionControllerTest       : Started SubscriptionControllerTest in 14.395 seconds (process running for 19.876)
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

@@ -1,5 +1,6 @@
 package com.example.api.controller;
 
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -9,11 +10,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.api.dto.SubscriptionRequest;
 import com.example.api.dto.SubscriptionResponse;
+import com.example.api.dto.SubscriptionItemDto;
 import com.example.api.exceptions.DuplicateException;
 import com.example.api.exceptions.InvalidEmailException;
 import com.example.api.service.SubscriptionService;
@@ -68,5 +71,19 @@ public class SubscriptionControllerTest {
             .content(objectMapper.writeValueAsString(requestObject)))
             .andExpect(status().isConflict())
             .andExpect(jsonPath("$.message").value("Email already subscribed"));
+    }
+
+    @Test
+    void getSubscriptions_success() throws Exception {
+        SubscriptionItemDto dto = new SubscriptionItemDto(1L, "testemail@email.com");
+        List<SubscriptionItemDto> subscriptionList = List.of(dto);
+        when(service.getAllSubscriptionDtos()).thenReturn(subscriptionList);
+
+        mockMvc.perform(
+            get("/api/subscriptions")
+            .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$[0].id").value(1))
+            .andExpect(jsonPath("$[0].email").value("testemail@email.com"));
     }
 }

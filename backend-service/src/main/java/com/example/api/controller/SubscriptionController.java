@@ -1,11 +1,15 @@
 package com.example.api.controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.api.dto.SubscriptionItemDto;
 import com.example.api.dto.SubscriptionRequest;
 import com.example.api.dto.SubscriptionResponse;
 import com.example.api.service.SubscriptionService;
@@ -30,4 +34,14 @@ public class SubscriptionController {
         SubscriptionResponse response = subscriptionService.createSubscription(request);
         return ResponseEntity.ok(response);
     }
+
+    /**
+     * Gets all subscriptions
+     */
+    @GetMapping("/subscriptions")
+    public ResponseEntity<List<SubscriptionItemDto>> getAllSubscriptions() {
+        List<SubscriptionItemDto> subscriptions = subscriptionService.getAllSubscriptionDtos();
+        return ResponseEntity.ok(subscriptions);
+    }
+    
 }

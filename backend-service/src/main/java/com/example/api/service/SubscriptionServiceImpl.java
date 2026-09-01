@@ -1,6 +1,7 @@
 package com.example.api.service;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -8,6 +9,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.stereotype.Service;
 
+import com.example.api.dto.SubscriptionItemDto;
 import com.example.api.dto.SubscriptionRequest;
 import com.example.api.dto.SubscriptionResponse;
 import com.example.api.exceptions.DuplicateException;
@@ -42,5 +44,15 @@ public class SubscriptionServiceImpl implements SubscriptionService{
             subscriptions.put(nextId, new Subscription(nextId, email, Instant.now()));
 
             return new SubscriptionResponse("Subscription processed: " + email);
+        }
+
+        @Override
+        public List<Subscription> getAllSubscriptions() {
+            return subscriptions.values().stream().toList();
+        }
+
+        @Override
+        public List<SubscriptionItemDto> getAllSubscriptionDtos() {
+            return getAllSubscriptions().stream().map(SubscriptionItemDto::new).toList();
         }
 }
