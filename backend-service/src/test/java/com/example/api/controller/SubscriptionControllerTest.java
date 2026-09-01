@@ -14,6 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.example.api.dto.SubscriptionRequest;
 import com.example.api.dto.SubscriptionResponse;
+import com.example.api.exceptions.DuplicateException;
 import com.example.api.exceptions.InvalidEmailException;
 import com.example.api.service.SubscriptionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,7 +45,7 @@ public class SubscriptionControllerTest {
     }
 
     @Test
-    void createsSubscription_failure() throws Exception {
+    void createsSubscription_failure_invalid_email() throws Exception {
         when(service.createSubscription(any())).thenThrow(new InvalidEmailException("Invalid email address"));
         SubscriptionRequest requestObject = new SubscriptionRequest("invalidemail.com");
         
@@ -54,5 +55,18 @@ public class SubscriptionControllerTest {
             .content(objectMapper.writeValueAsString(requestObject)))
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$.message").value("Invalid email address"));
+    }
+
+    @Test
+    void createsSubscription_failure_duplicate_email() throws Exception {
+        when(service.createSubscription(any())).thenThrow(new DuplicateException("Email already subscribed"));
+        SubscriptionRequest requestObject = new SubscriptionRequest("dupelicateEmail@Email.com");
+        
+        mockMvc.perform(
+            post("/api/subscriptions")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(requestObject)))
+            .andExpect(status().isConflict())
+            .andExpect(jsonPath("$.message").value("Email already subscribed"));
     }
 }

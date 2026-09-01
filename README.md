@@ -43,6 +43,8 @@ microservice-practice/
 ├── backend-service/
 │   ├── build.gradle          # Gradle project configuration (Includes JUnit 5 platform)
 │   ├── settings.gradle       # Gradle root module definition
+│   ├── gradlew / gradlew.bat # Gradle wrapper (pins the Gradle version; required for CI)
+│   ├── gradle/wrapper/       # Wrapper JAR + version properties
 │   └── src/
 │       ├── main/java/com/example/api/
 │       │   ├── ApiApplication.java          # Spring Boot Entry Point
@@ -125,7 +127,7 @@ backend-service/build/reports/tests/test/index.html
 ```
 
 ### Continuous Integration
-A GitHub Actions workflow (`.github/workflows/backend-tests.yml`) automatically runs the full backend test suite on every push and pull request targeting `main`, so regressions are caught before merge rather than discovered locally.
+A GitHub Actions workflow (`.github/workflows/backend-tests.yml`) automatically runs the full backend test suite on every push and pull request targeting `master`, so regressions are caught before merge rather than discovered locally.
 
 ---
 
