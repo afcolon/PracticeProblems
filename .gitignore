@@ -1,0 +1,28 @@
+# ---- Node / React (client) ----
+node_modules/
+client/dist/
+client/.vite/
+client/.pnpm-store/
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ---- Java / Gradle (backend-service) ----
+backend-service/.gradle/
+backend-service/build/
+!backend-service/gradle/wrapper/gradle-wrapper.jar
+*.class
+
+# ---- OS files ----
+.DS_Store
+Thumbs.db
+
+# ---- Editor / IDE ----
+.vscode/
+.idea/
+*.iml
+
+# ---- Environment / secrets ----
+.env
+.env.local
