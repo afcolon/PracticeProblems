@@ -4,12 +4,15 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.api.dto.SubscriptionItemDto;
+import com.example.api.dto.SubscriptionUpdateDto;
 import com.example.api.dto.SubscriptionRequest;
 import com.example.api.dto.SubscriptionResponse;
 import com.example.api.service.SubscriptionService;
@@ -44,4 +47,15 @@ public class SubscriptionController {
         return ResponseEntity.ok(subscriptions);
     }
     
+    /**
+     * Updates a subscription
+     */
+    @PutMapping("/subscriptions/{id}")
+    public ResponseEntity<SubscriptionResponse> updateSubscription(
+        @PathVariable long id,
+        @RequestBody SubscriptionUpdateDto dto
+    ) {
+        SubscriptionResponse response = subscriptionService.updateSubscription(id, dto);
+        return ResponseEntity.ok(response);
+    }
 }

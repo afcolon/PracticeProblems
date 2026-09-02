@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 import com.example.api.dto.SubscriptionItemDto;
 import com.example.api.dto.SubscriptionRequest;
 import com.example.api.dto.SubscriptionResponse;
+import com.example.api.dto.SubscriptionUpdateDto;
 import com.example.api.exceptions.DuplicateException;
 import com.example.api.exceptions.InvalidEmailException;
+import com.example.api.exceptions.NotFoundException;
 import com.example.api.model.Subscription;
 
 @Service
@@ -54,5 +56,39 @@ public class SubscriptionServiceImpl implements SubscriptionService{
         @Override
         public List<SubscriptionItemDto> getAllSubscriptionDtos() {
             return getAllSubscriptions().stream().map(SubscriptionItemDto::new).toList();
+        }
+
+        @Override
+        public SubscriptionResponse updateSubscription(long id, SubscriptionUpdateDto dto) {
+            // Validate dto data
+            String newEmail = dto.getNewEmail();
+            if (newEmail == null || newEmail.trim().isEmpty()) {
+                throw new InvalidEmailException("Invalid email address");
+            }
+            if (!newEmail.matches(EMAIL_REGEX)){
+                throw new InvalidEmailException("Invalid email address");
+            }
+
+            // Find subscription
+            Subscription subscriptionToUpdate = subscriptions.get(id);
+            if (subscriptionToUpdate == null) {
+                throw new NotFoundException("Invalid id used");
+            }
+
+            // No-Op
+            String oldEmail = subscriptionToUpdate.getEmail();
+            if (oldEmail.equalsIgnoreCase(newEmail)){
+                return new SubscriptionResponse("Subscription updated: " + newEmail);
+            }
+
+            if(!usedEmails.add(newEmail.toLowerCase())) {
+                throw new DuplicateException("New email is already subscribed");
+            }
+
+            subscriptionToUpdate.setEmail(newEmail);
+            subscriptions.put(subscriptionToUpdate.getId(), subscriptionToUpdate);
+            usedEmails.remove(oldEmail.toLowerCase());
+
+            return new SubscriptionResponse("Subscription updated: " + newEmail);
         }
 }

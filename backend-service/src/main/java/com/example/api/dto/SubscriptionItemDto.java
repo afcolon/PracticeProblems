@@ -2,6 +2,9 @@ package com.example.api.dto;
 
 import com.example.api.model.Subscription;
 
+/**
+ * Payload from server back to client for getting subscriptions
+ */
 public class SubscriptionItemDto {
     private final long id;
 

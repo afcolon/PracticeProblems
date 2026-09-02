@@ -4,6 +4,7 @@ import java.util.List;
 import com.example.api.model.Subscription;
 import com.example.api.dto.SubscriptionRequest;
 import com.example.api.dto.SubscriptionResponse;
+import com.example.api.dto.SubscriptionUpdateDto;
 import com.example.api.dto.SubscriptionItemDto;
 
 public interface SubscriptionService {
@@ -23,4 +24,10 @@ public interface SubscriptionService {
      * Returns a list of all subscriptions as {@code SubscriptionItemDto}s
      */
     List<SubscriptionItemDto> getAllSubscriptionDtos();
+
+    /**
+     * Updates a subscription based on the provided id and {@code SubscriptionUpdateDto}.
+     * Throws if id is invalid or new subscription information is invalid.
+     */
+    SubscriptionResponse updateSubscription(long id, SubscriptionUpdateDto dto);
 }

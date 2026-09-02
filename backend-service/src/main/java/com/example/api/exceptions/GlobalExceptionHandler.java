@@ -19,4 +19,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<SubscriptionResponse> handleInvalid(InvalidEmailException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new SubscriptionResponse(e.getMessage()));
     }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<SubscriptionResponse> handleNotFound(NotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new SubscriptionResponse(e.getMessage()));
+    }
 }

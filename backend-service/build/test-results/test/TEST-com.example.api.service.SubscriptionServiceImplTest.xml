@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.example.api.service.SubscriptionServiceImplTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-09-01T21:00:42" hostname="795129d806af" time="0.079">
+<testsuite name="com.example.api.service.SubscriptionServiceImplTest" tests="18" skipped="0" failures="0" errors="0" timestamp="2026-09-02T19:13:28" hostname="c93cafefb540" time="0.053">
   <properties/>
-  <testcase name="createSubscription_fails_null_email()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.029"/>
+  <testcase name="createSubscription_fails_null_email()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.013"/>
+  <testcase name="updateSubscription_fails_invalid_email()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.002"/>
   <testcase name="getAllSubscriptions_success_empty()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.001"/>
   <testcase name="getAllSubscriptionDtos_success_empty()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.002"/>
-  <testcase name="createSubscription_fails_duplicate_email_case_insensitive()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.003"/>
-  <testcase name="createSubscription_fails_empty_email()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.003"/>
-  <testcase name="createSubscription_fails_duplicate_email()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.002"/>
-  <testcase name="getAllSubscriptionDtos_success()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.006"/>
-  <testcase name="createSubscription_success_new_email()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.003"/>
-  <testcase name="createSubscription_fails_invalid_email()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.002"/>
-  <testcase name="dtoConversion_success()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.003"/>
-  <testcase name="getAllSubscriptions_success()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.002"/>
+  <testcase name="createSubscription_fails_duplicate_email_case_insensitive()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.002"/>
+  <testcase name="updateSubscription_fails_null_email()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.002"/>
+  <testcase name="updateSubscription_fails_invalid_id()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.002"/>
+  <testcase name="createSubscription_fails_empty_email()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.001"/>
+  <testcase name="updateSubscription_succeeds_no_changes_no_op()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.005"/>
+  <testcase name="createSubscription_fails_duplicate_email()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.001"/>
+  <testcase name="updateSubscription_fails_empty_email()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.001"/>
+  <testcase name="updateSubscription_success()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.001"/>
+  <testcase name="getAllSubscriptionDtos_success()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.001"/>
+  <testcase name="createSubscription_success_new_email()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.0"/>
+  <testcase name="createSubscription_fails_invalid_email()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.001"/>
+  <testcase name="dtoConversion_success()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.002"/>
+  <testcase name="updateSubscription_fails_dupe_email_ignores_case()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.002"/>
+  <testcase name="getAllSubscriptions_success()" classname="com.example.api.service.SubscriptionServiceImplTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
