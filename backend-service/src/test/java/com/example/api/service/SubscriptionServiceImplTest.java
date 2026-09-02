@@ -326,4 +326,42 @@ public class SubscriptionServiceImplTest {
         assertEquals(email1, subscription1AfterNoOp.getEmail());
         assertEquals(email2, subscription2AfterNoOP.getEmail());
     }
+
+    @Test
+    void deleteSubscription_success() {
+        String email = "email@email.com";
+        SubscriptionRequest request = new SubscriptionRequest(email);
+        subscriptionService.createSubscription(request);
+
+        List<Subscription> subscriptionList = subscriptionService.getAllSubscriptions();
+        assertEquals(1, subscriptionList.size());
+        Subscription subscription = subscriptionList.get(0);
+
+        SubscriptionResponse response = subscriptionService.deleteSubscription(subscription.getId());
+
+        assertEquals("Subscription deleted", response.getMessage());
+        List<Subscription> subscriptionListAfterDelete = subscriptionService.getAllSubscriptions();
+        assertEquals(0, subscriptionListAfterDelete.size());
+
+        SubscriptionRequest requestAfterDelete = new SubscriptionRequest(email);
+        SubscriptionResponse responseAfterDelete = subscriptionService.createSubscription(requestAfterDelete);
+        assertTrue(responseAfterDelete.getMessage().contains("Subscription processed"));
+    }
+
+    @Test
+    void deleteSubscription_success_invalid_id() {
+        String email = "email@email.com";
+        long invalidId = 99999;
+        SubscriptionRequest request = new SubscriptionRequest(email);
+        subscriptionService.createSubscription(request);
+
+        List<Subscription> subscriptionList = subscriptionService.getAllSubscriptions();
+        assertEquals(1, subscriptionList.size());
+
+        SubscriptionResponse response = subscriptionService.deleteSubscription(invalidId);
+
+        assertEquals("Subscription deleted", response.getMessage());
+        List<Subscription> subscriptionListAfterDelete = subscriptionService.getAllSubscriptions();
+        assertEquals(1, subscriptionListAfterDelete.size());
+    }
 }

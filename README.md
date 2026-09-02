@@ -25,7 +25,18 @@ Unlike a standard monolith, this application runs as a distributed network of de
 
 *   **`gateway` (Nginx)**: The single entry point for the browser. It runs on port `8080`, reading incoming request paths. It forwards `/api/*` traffic to the backend, and routes all other requests to the React dev server.
 *   **`client` (React + Vite + pnpm 11)**: The frontend user interface. It communicates using relative routing (`/api/subscriptions`), removing the need to configure CORS or manage hardcoded backend URLs.
-*   **`backend-service` (Spring Boot + Gradle)**: The independent data processor. It exposes a REST endpoint (`/api/subscriptions`) to process and store incoming subscription submissions, backed by a thread-safe in-memory store.
+*   **`backend-service` (Spring Boot + Gradle)**: The independent data processor. It exposes a full CRUD REST API under `/api/subscriptions`, backed by a thread-safe in-memory store.
+
+---
+
+## 🔌 API Endpoints
+
+| Method   | Path                     | Description                                         |
+|----------|--------------------------|------------------------------------------------------|
+| `POST`   | `/api/subscriptions`     | Creates a new subscription.                          |
+| `GET`    | `/api/subscriptions`     | Returns all subscriptions as a list of summary DTOs.  |
+| `PUT`    | `/api/subscriptions/{id}`| Updates a subscription's email.                      |
+| `DELETE` | `/api/subscriptions/{id}`| Deletes a subscription. Idempotent — deleting a non-existent id still returns success. |
 
 ---
 
@@ -48,10 +59,10 @@ microservice-practice/
 │   └── src/
 │       ├── main/java/com/example/api/
 │       │   ├── ApiApplication.java          # Spring Boot Entry Point
-│       │   ├── controller/                  # REST API Layer (Exposes /api/subscriptions)
-│       │   ├── service/                     # Business Logic (Uniqueness/Processing)
+│       │   ├── controller/                  # REST API Layer (CRUD endpoints under /api/subscriptions)
+│       │   ├── service/                     # Business Logic (validation, uniqueness, thread-safe in-memory store)
 │       │   ├── model/                       # Core Domain Entities (Subscription Schema)
-│       │   ├── dto/                         # Data Transfer Objects (Req/Res Payload Shapes)
+│       │   ├── dto/                         # Data Transfer Objects (Request/Response/Update/Item payload shapes)
 │       │   └── exceptions/                  # Custom exceptions + centralized @ControllerAdvice handler
 │       │
 │       └── test/java/com/example/api/       # Test Infrastructure Package
@@ -74,12 +85,15 @@ microservice-practice/
 
 Business-rule failures are modeled as unchecked exceptions rather than status strings embedded in a response body, so the HTTP layer and the business logic stay cleanly separated:
 
-| Failure                          | Exception               | HTTP Status         |
-|-----------------------------------|--------------------------|----------------------|
-| Malformed or missing email        | `InvalidEmailException`  | `400 Bad Request`    |
-| Email already subscribed          | `DuplicateException`     | `409 Conflict`       |
+| Failure                              | Exception               | HTTP Status         |
+|----------------------------------------|--------------------------|----------------------|
+| Malformed or missing email             | `InvalidEmailException`  | `400 Bad Request`    |
+| Email already subscribed               | `DuplicateException`     | `409 Conflict`       |
+| Subscription id does not exist (update)| `NotFoundException`      | `404 Not Found`      |
 
 The service layer throws; a `GlobalExceptionHandler` (`@ControllerAdvice`) is the single place that maps each exception type to its HTTP response. Controllers stay free of try/catch blocks and only describe the success path.
+
+Note that `DELETE` is intentionally idempotent — deleting a subscription id that doesn't exist (or no longer exists) is treated as a success rather than an error, since the caller's desired end state ("this id no longer exists") is already true either way.
 
 ---
 
@@ -107,9 +121,9 @@ docker compose up
 
 ## 🧪 Testing Infrastructure
 
-The backend service runs automated checks at two layers using **JUnit 5**, **Mockito**, and **Spring Boot Test Starters**:
+The backend service runs automated checks at two layers using **JUnit 5**, **Mockito**, and **Spring Boot Test Starters**, covering the full CRUD surface (create, read, update, delete):
 
-*   **Service layer** (`SubscriptionServiceImplTest`) — validates business rules directly: email format validation, case-insensitive duplicate detection, and thread-safe ID assignment, asserting on the exceptions thrown for each failure case.
+*   **Service layer** (`SubscriptionServiceImplTest`) — validates business rules directly against the in-memory store: email format validation, case-insensitive duplicate detection, thread-safe ID assignment, not-found handling, no-op update detection, and that a deleted subscription's email correctly becomes available for reuse. Asserts on both thrown exceptions and actual store state after each operation, not just response messages.
 *   **Controller layer** (`SubscriptionControllerTest`) — uses `@WebMvcTest` with a mocked `SubscriptionService` to verify HTTP routing, request/response JSON shape, and that each exception type is translated into the correct status code, without re-testing business logic already covered by the service tests.
 
 ### Running Backend Unit Tests

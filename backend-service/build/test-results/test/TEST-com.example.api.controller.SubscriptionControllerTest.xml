@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.example.api.controller.SubscriptionControllerTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-09-02T19:13:26" hostname="c93cafefb540" time="1.233">
+<testsuite name="com.example.api.controller.SubscriptionControllerTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-09-02T19:46:01" hostname="c93cafefb540" time="1.508">
   <properties/>
-  <testcase name="updateSubscription_fails_invalid_email()" classname="com.example.api.controller.SubscriptionControllerTest" time="1.114"/>
-  <testcase name="updateSubscription_fails_invalid_id()" classname="com.example.api.controller.SubscriptionControllerTest" time="0.01"/>
-  <testcase name="createsSubscription_fails_invalid_email()" classname="com.example.api.controller.SubscriptionControllerTest" time="0.009"/>
-  <testcase name="createsSubscription_fails_duplicate_email()" classname="com.example.api.controller.SubscriptionControllerTest" time="0.007"/>
-  <testcase name="createsSubscription_success()" classname="com.example.api.controller.SubscriptionControllerTest" time="0.037"/>
-  <testcase name="updateSubscription_fails_duplicate_email()" classname="com.example.api.controller.SubscriptionControllerTest" time="0.009"/>
-  <testcase name="updateSubscription_success()" classname="com.example.api.controller.SubscriptionControllerTest" time="0.006"/>
-  <testcase name="getSubscriptions_success()" classname="com.example.api.controller.SubscriptionControllerTest" time="0.023"/>
-  <system-out><![CDATA[19:13:18.285 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.example.api.controller.SubscriptionControllerTest]: SubscriptionControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-19:13:18.874 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.example.api.ApiApplication for test class com.example.api.controller.SubscriptionControllerTest
+  <testcase name="deleteSubscription_success()" classname="com.example.api.controller.SubscriptionControllerTest" time="1.116"/>
+  <testcase name="updateSubscription_fails_invalid_email()" classname="com.example.api.controller.SubscriptionControllerTest" time="0.254"/>
+  <testcase name="updateSubscription_fails_invalid_id()" classname="com.example.api.controller.SubscriptionControllerTest" time="0.014"/>
+  <testcase name="createsSubscription_fails_invalid_email()" classname="com.example.api.controller.SubscriptionControllerTest" time="0.012"/>
+  <testcase name="createsSubscription_fails_duplicate_email()" classname="com.example.api.controller.SubscriptionControllerTest" time="0.01"/>
+  <testcase name="createsSubscription_success()" classname="com.example.api.controller.SubscriptionControllerTest" time="0.007"/>
+  <testcase name="updateSubscription_fails_duplicate_email()" classname="com.example.api.controller.SubscriptionControllerTest" time="0.011"/>
+  <testcase name="updateSubscription_success()" classname="com.example.api.controller.SubscriptionControllerTest" time="0.007"/>
+  <testcase name="getSubscriptions_success()" classname="com.example.api.controller.SubscriptionControllerTest" time="0.033"/>
+  <system-out><![CDATA[19:45:51.390 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.example.api.controller.SubscriptionControllerTest]: SubscriptionControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+19:45:51.929 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.example.api.ApiApplication for test class com.example.api.controller.SubscriptionControllerTest
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
@@ -20,12 +21,12 @@
 
  :: Spring Boot ::                (v3.3.0)
 
-2026-09-02T19:13:20.532Z  INFO 715 --- [    Test worker] c.e.a.c.SubscriptionControllerTest       : Starting SubscriptionControllerTest using Java 17.0.11 with PID 715 (started by root in /app)
-2026-09-02T19:13:20.536Z  INFO 715 --- [    Test worker] c.e.a.c.SubscriptionControllerTest       : No active profile set, falling back to 1 default profile: "default"
-2026-09-02T19:13:26.678Z  INFO 715 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2026-09-02T19:13:26.679Z  INFO 715 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2026-09-02T19:13:26.684Z  INFO 715 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
-2026-09-02T19:13:26.745Z  INFO 715 --- [    Test worker] c.e.a.c.SubscriptionControllerTest       : Started SubscriptionControllerTest in 7.547 seconds (process running for 10.628)
+2026-09-02T19:45:53.589Z  INFO 1072 --- [    Test worker] c.e.a.c.SubscriptionControllerTest       : Starting SubscriptionControllerTest using Java 17.0.11 with PID 1072 (started by root in /app)
+2026-09-02T19:45:53.594Z  INFO 1072 --- [    Test worker] c.e.a.c.SubscriptionControllerTest       : No active profile set, falling back to 1 default profile: "default"
+2026-09-02T19:46:01.230Z  INFO 1072 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-09-02T19:46:01.232Z  INFO 1072 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-09-02T19:46:01.243Z  INFO 1072 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 4 ms
+2026-09-02T19:46:01.337Z  INFO 1072 --- [    Test worker] c.e.a.c.SubscriptionControllerTest       : Started SubscriptionControllerTest in 9.062 seconds (process running for 12.088)
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

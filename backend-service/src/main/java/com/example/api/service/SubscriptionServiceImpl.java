@@ -91,4 +91,15 @@ public class SubscriptionServiceImpl implements SubscriptionService{
 
             return new SubscriptionResponse("Subscription updated: " + newEmail);
         }
+
+        @Override
+        public SubscriptionResponse deleteSubscription(long id) {
+            Subscription subscription = subscriptions.remove(id);
+
+            if(subscription != null) {
+                usedEmails.remove(subscription.getEmail().toLowerCase());
+            }
+            
+            return new SubscriptionResponse("Subscription deleted");
+        }
 }

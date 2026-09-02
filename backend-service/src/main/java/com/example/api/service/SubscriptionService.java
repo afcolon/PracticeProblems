@@ -16,7 +16,7 @@ public interface SubscriptionService {
     SubscriptionResponse createSubscription(SubscriptionRequest request);
 
     /**
-     * Returns a list of all subscriptions
+     * Returns a list of all subscriptions.
      */
     List<Subscription> getAllSubscriptions();
 
@@ -30,4 +30,9 @@ public interface SubscriptionService {
      * Throws if id is invalid or new subscription information is invalid.
      */
     SubscriptionResponse updateSubscription(long id, SubscriptionUpdateDto dto);
+
+    /**
+     * Deletes a subscription based on the provided id.
+     */
+    SubscriptionResponse deleteSubscription(long id);
 }

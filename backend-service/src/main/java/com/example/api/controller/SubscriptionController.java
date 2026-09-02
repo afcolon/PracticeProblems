@@ -3,6 +3,7 @@ package com.example.api.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,7 +49,7 @@ public class SubscriptionController {
     }
     
     /**
-     * Updates a subscription
+     * Updates a subscription given an id and {@code SubscriptionUpdateDto} payload with the new data
      */
     @PutMapping("/subscriptions/{id}")
     public ResponseEntity<SubscriptionResponse> updateSubscription(
@@ -56,6 +57,17 @@ public class SubscriptionController {
         @RequestBody SubscriptionUpdateDto dto
     ) {
         SubscriptionResponse response = subscriptionService.updateSubscription(id, dto);
+        return ResponseEntity.ok(response);
+    }
+
+    /**
+     * Deletes a subscription given an id
+     */
+    @DeleteMapping("/subscriptions/{id}")
+    public ResponseEntity<SubscriptionResponse> deleteSubscription(
+        @PathVariable long id
+    ) {
+        SubscriptionResponse response = subscriptionService.deleteSubscription(id);
         return ResponseEntity.ok(response);
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -141,5 +142,15 @@ public class SubscriptionControllerTest {
             .content(objectMapper.writeValueAsString(dto)))
             .andExpect(status().isNotFound())
             .andExpect(jsonPath("$.message").value("Invalid id used"));
+    }
+
+    @Test
+    void deleteSubscription_success() throws Exception{
+        when(service.deleteSubscription(anyLong())).thenReturn(new SubscriptionResponse("Success message"));
+
+        mockMvc.perform(
+            delete("/api/subscriptions/1"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.message").value("Success message"));
     }
 }
