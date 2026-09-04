@@ -1,4 +1,4 @@
-import {useState, useEffect, useCallback} from "react";
+import {useState, useEffect, useCallback, useRef} from "react";
 import { deleteSubscription, getSubscriptions, postSubscription, putSubscription } from "../api/subscriptions";
 import Modal from "../components/Modal";
 import ConfirmationModal from "../components/ConfirmationModal";
@@ -96,8 +96,8 @@ function SubscriptionGrid ({ subscriptions, loadError, error, setError, setSelec
                         <Row key={sub.id}>
                             <span>{sub.email}</span>
                             <div style={{display: 'flex', gap: '4px'}}>
-                                <IconButton onClick={() => handleUpdate(sub)} title="Edit"><Pencil /></IconButton>
-                                <IconButton onClick={() => handleDelete(sub)} title="Delete"><Trash /></IconButton>
+                                <IconButton onClick={() => handleUpdate(sub)} title="Edit subscription"><Pencil /></IconButton>
+                                <IconButton onClick={() => handleDelete(sub)} title="Delete subscription"><Trash /></IconButton>
                             </div>
                         </Row>
                     ))}
@@ -108,10 +108,68 @@ function SubscriptionGrid ({ subscriptions, loadError, error, setError, setSelec
     )
 }
 
+const FormDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+`
+
+const StyledInput = styled.input`
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: 14px;
+
+    &:focus {
+        outline: none;
+        border-color: var(--color-accent);
+    }
+`;
+
+const SubmitButton = styled.button`
+    background: var(--color-accent);
+    color: var(--color-accent-contrast);
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: var(--space-sm) var(--space-lg);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    align-self: flex-start;
+
+    &:hover {
+        background: var(--color-accent-hover);
+    }
+`;
+
+const ModalTitle = styled.p`
+    font-family: var(--font-heading);
+    color: var(--color-text);
+    margin: 0 0 var(--space-md);
+`
+
+const ModalBody = styled.p`
+    color: var(--color-error);
+    font-size: 13px;
+    margin: var(--space-sm) 0 0;
+`
+
 function SubscriptionModal ({showSubModal, setShowSubModal, refreshGrid, currentSub}) {
     const [email, setEmail] = useState(currentSub?.email || '');
     const [message, setMessage] = useState('');
     const createMode = !currentSub;
+
+    const inputRef = useRef(null);
+
+    useEffect(() => {
+        if (showSubModal && inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, [showSubModal]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -137,27 +195,25 @@ function SubscriptionModal ({showSubModal, setShowSubModal, refreshGrid, current
         setShowSubModal(false)
     }
 
+    
+
     return (
         <Modal isOpen={showSubModal} onClose={() => handleClose()}>
-            <h3>
-                {createMode
-                    ? 'New subscription'
-                    : 'Edit subscription'
-                }
-            </h3>
-            <div>{message}</div>
-
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="email"
-                    placeholder="Enter email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
-                <button type="submit">Submit</button>
-            </form>
-
+                <ModalTitle>{createMode ? 'New subscription' : 'Edit subscription'}</ModalTitle>
+                <form onSubmit={handleSubmit}>
+                    <FormDiv>
+                        <StyledInput
+                            ref={inputRef}
+                            type="email"
+                            placeholder="Enter email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                        <SubmitButton type="submit">Submit</SubmitButton>
+                    </FormDiv>
+                </form>
+            {message && <ModalBody>{message}</ModalBody>}
         </Modal>
     )
 }
