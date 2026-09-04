@@ -1,7 +1,33 @@
+import styled from "styled-components";
+
+const PageDiv = styled.div`
+    color: var(--color-text-muted);
+    padding: var(--space-md);
+    font-family: var(--font-body);
+`;
+
+const PageTitle = styled.h1`
+    font-family: var(--font-heading);
+    color: var(--color-text);
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+    padding-top: var(--space-lg);
+`;
+
+const PageSubtitle = styled.h2`
+    font-family: var(--font-heading);
+    color: var(--color-text);
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+    padding-top: var(--space-lg);
+`;
+
 export default function AboutPage() {
     return (
-        <div>
-            <h1>About This App</h1>
+        <PageDiv>
+            <PageTitle>About This App</PageTitle>
             <p>
                 A decoupled full-stack practice application that mimics a production
                 corporate environment. It combines a React client, a Spring Boot REST
@@ -9,7 +35,7 @@ export default function AboutPage() {
                 container behind a single port.
             </p>
 
-            <h2>Architecture</h2>
+            <PageSubtitle>Architecture</PageSubtitle>
             <img src="/architecture-diagram.svg" alt="Application architecture diagram" style={{ maxWidth: '100%' }} />
             <ul>
                 <li>
@@ -30,7 +56,7 @@ export default function AboutPage() {
                 </li>
             </ul>
 
-            <h2>API Endpoints</h2>
+            <PageSubtitle>API Endpoints</PageSubtitle>
             <table>
                 <thead>
                     <tr>
@@ -66,7 +92,7 @@ export default function AboutPage() {
                 </tbody>
             </table>
 
-            <h2>Error Handling</h2>
+            <PageSubtitle>Error Handling</PageSubtitle>
             <p>
                 Business-rule failures are modeled as unchecked exceptions rather
                 than status strings embedded in a response body, so the HTTP layer
@@ -101,7 +127,7 @@ export default function AboutPage() {
                 </tbody>
             </table>
 
-            <h2>Testing</h2>
+            <PageSubtitle>Testing</PageSubtitle>
             <p>
                 The backend runs automated checks at two layers using JUnit 5,
                 Mockito, and Spring Boot Test Starters, covering the full CRUD
@@ -126,6 +152,6 @@ export default function AboutPage() {
                 A GitHub Actions workflow runs the full backend test suite on every
                 push and pull request, so regressions are caught before merge.
             </p>
-        </div>
+        </PageDiv>
     );
 }
