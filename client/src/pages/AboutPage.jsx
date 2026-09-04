@@ -10,18 +10,7 @@ export default function AboutPage() {
             </p>
 
             <h2>Architecture</h2>
-            <pre>
-{`Local Browser (Port 8080)
-        |
-        v
-  Nginx API Gateway (Port 8080)
-        |
-   -----------
-   |         |
-   v         v
-React UI   Java API
-Port 5173  Port 8081`}
-            </pre>
+            <img src="/architecture-diagram.svg" alt="Application architecture diagram" style={{ maxWidth: '100%' }} />
             <ul>
                 <li>
                     <strong>Gateway (Nginx):</strong> The single entry point for the
