@@ -1,19 +1,6 @@
 
 const SubscriptionUrl = '/api/subscriptions';
 
-
-export async function fetchData() {
-            setLoading(true);
-            try {
-                const data = await getSubscriptions();
-                setSubscriptions(data);
-            } catch(err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-    }
-
 /**
  * Sends request to create a new subscription
  */
@@ -56,6 +43,53 @@ export async function getSubscriptions() {
 
     } catch (err) {
         console.error('Error during get subscriptions request');
+        throw err;
+    }
+}
+
+/**
+ * Sends a request to update a subscription with the given id
+ */
+export async function putSubscription(id, email) {
+    const updateDto = {
+        newEmail: email
+    };
+
+    try {
+        const response = await fetch(SubscriptionUrl + "/" + id, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updateDto)
+        });
+
+        const success = response.ok;
+        const data = await response.json();
+        const { message } = data;
+
+        return { success, message };
+    } catch(err) {
+        console.error('Error during put subscription request');
+        throw err;
+    }
+}
+
+/**
+ * Sends a request to delete a subscription with the given id
+ */
+export async function deleteSubscription(id) {
+    try {
+        const response = await fetch(SubscriptionUrl + '/' + id, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+        });
+
+        const success = response.ok;
+        const data = await response.json();
+        const message = data.message;
+
+        return { success, message };
+    } catch(err) {
+        console.error('Error during delete subscription request');
         throw err;
     }
 }
