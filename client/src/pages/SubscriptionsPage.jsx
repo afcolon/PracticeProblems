@@ -195,8 +195,6 @@ function SubscriptionModal ({showSubModal, setShowSubModal, refreshGrid, current
         setShowSubModal(false)
     }
 
-    
-
     return (
         <Modal isOpen={showSubModal} onClose={() => handleClose()}>
                 <ModalTitle>{createMode ? 'New subscription' : 'Edit subscription'}</ModalTitle>
