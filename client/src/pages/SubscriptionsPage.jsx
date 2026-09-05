@@ -136,6 +136,7 @@ const SubmitButton = styled.button`
     border: none;
     border-radius: var(--radius-sm);
     padding: var(--space-sm) var(--space-lg);
+    margin-top: var(--space-lg);
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
@@ -366,6 +367,7 @@ export default function SubscriptionsPage() {
                     onConfirm={handleDelete}
                     header={'Delete subscription?'}
                     message={'Are you sure you want to delete this subscription: ' + selectedSub.email}
+                    isDestructive={true}
                 />
             }
         </PageDiv>
