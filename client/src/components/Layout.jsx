@@ -12,7 +12,7 @@ const Nav = styled.nav`
 const StyledNavLink = styled(NavLink)`
     color: var(--color-text-muted);
     text-decoration: none;
-    font-familiy: var(--font-body);
+    font-family: var(--font-body);
 
     &:hover {
         color: var(--color-text);
